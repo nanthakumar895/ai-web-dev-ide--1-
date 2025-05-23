@@ -1,0 +1,6 @@
+{
+  "name": "AI Web Dev IDE",
+  "description": "An AI-powered Integrated Development Environment to generate full-stack web application code (React, Vite, Tailwind, Node.js) using Gemini.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
