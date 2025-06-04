@@ -7,7 +7,7 @@ interface ErrorAlertProps {
 
 export const ErrorAlert: React.FC<ErrorAlertProps> = ({ message, onClose }) => {
   return (
-    <div className="bg-gradient-to-r from-red-600/90 to-pink-600/90 backdrop-blur-sm border border-red-500/30 text-red-100 px-6 py-4 rounded-xl relative shadow-lg" role="alert">
+    <div className="bg-gradient-to-r from-red-600/90 to-pink-600/90 backdrop-blur-sm border border-red-500/30 text-red-100 px-6 py-4 rounded-xl relative shadow-lg\" role="alert">
       <strong className="font-bold mr-1">Error:</strong>
       <span className="block sm:inline">{message}</span>
       {onClose && (
