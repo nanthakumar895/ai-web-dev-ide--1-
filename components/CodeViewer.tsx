@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface CodeViewerProps {
@@ -33,21 +32,24 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ filePath, code }) => {
   const language = getLanguage(filePath);
 
   return (
-    <div className="flex-grow flex flex-col bg-gray-800 overflow-hidden h-full"> {/* Ensured h-full for flex context */}
-      <div className="p-3 bg-gray-750 border-b border-gray-700 text-sm text-indigo-300">
+    <div className="flex-grow flex flex-col bg-gray-800/50 overflow-hidden h-full">
+      <div className="p-4 bg-gray-750/50 border-b border-gray-700/50 flex items-center">
         {filePath ? (
-          <span className="font-mono">{filePath}</span>
+          <span className="font-mono text-sm text-indigo-300">{filePath}</span>
         ) : (
-          <span>No file selected</span>
+          <span className="text-gray-400">No file selected</span>
         )}
-        {filePath && <span className="ml-4 px-2 py-0.5 bg-gray-600 text-xs text-gray-300 rounded">{language}</span>}
+        {filePath && (
+          <span className="ml-4 px-3 py-1 bg-gray-700/50 text-xs text-gray-300 rounded-full font-medium">
+            {language}
+          </span>
+        )}
       </div>
-      {/* This div needs to grow to make textarea fill available space */}
-      <div className="flex-grow p-1 overflow-auto bg-gray-850"> 
+      <div className="flex-grow p-1 overflow-auto bg-gray-850/50">
         <textarea
           readOnly
           value={code}
-          className="w-full h-full p-3 bg-gray-900 text-gray-200 font-mono text-sm border-none focus:ring-0 resize-none leading-relaxed"
+          className="w-full h-full p-4 bg-gray-900/50 text-gray-200 font-mono text-sm border-none focus:ring-0 resize-none leading-relaxed rounded-lg"
           placeholder="// Code will appear here..."
           spellCheck="false"
           aria-label={filePath ? `Code for ${filePath}` : "Code editor"}

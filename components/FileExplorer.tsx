@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { GeneratedFile, FileSystemNode } from '../types';
 
@@ -8,15 +7,11 @@ interface FileExplorerProps {
   onSelectFile: (path: string) => void;
 }
 
-// Helper to build a simple tree structure (can be enhanced)
-// For now, it just lists all files, sorting them by path.
-// A more complex version would parse paths into a tree.
 const buildFileTree = (files: GeneratedFile[]): FileSystemNode[] => {
     return files
         .map(file => ({ name: file.path.split('/').pop() || file.path, path: file.path, type: 'file' as 'file' | 'folder' }))
         .sort((a, b) => a.path.localeCompare(b.path));
 };
-
 
 const FileIcon: React.FC = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" aria-hidden="true">
@@ -24,11 +19,10 @@ const FileIcon: React.FC = () => (
   </svg>
 );
 
-
 export const FileExplorer: React.FC<FileExplorerProps> = ({ files, selectedFilePath, onSelectFile }) => {
   if (files.length === 0) {
     return (
-      <div className="p-4 bg-gray-800 rounded-lg shadow-lg text-sm text-gray-400">
+      <div className="p-6 bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl shadow-lg text-sm text-gray-400">
         No files generated yet.
       </div>
     );
@@ -37,25 +31,26 @@ export const FileExplorer: React.FC<FileExplorerProps> = ({ files, selectedFileP
   const fileNodes = buildFileTree(files);
 
   return (
-    // Adjusted max-height: calc(100vh - approx height of header, footer, UserInputPane, and some padding)
-    // This is an estimate; for perfect results, a more complex layout or JS height calculation might be needed.
-    // For now, 60vh should give it ample space without being too greedy on smaller screens.
-    <div className="p-4 bg-gray-800 rounded-lg shadow-lg overflow-y-auto" style={{maxHeight: 'calc(100vh - 20rem)'}}  aria-labelledby="file-explorer-heading">
-      <h3 id="file-explorer-heading" className="text-lg font-semibold text-indigo-300 mb-3 border-b border-gray-700 pb-2">Project Files</h3>
-      <ul role="listbox" aria-orientation="vertical">
+    <div className="p-6 bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl shadow-lg overflow-y-auto border border-gray-700/30" style={{maxHeight: 'calc(100vh - 20rem)'}} aria-labelledby="file-explorer-heading">
+      <h3 id="file-explorer-heading" className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-4 pb-3 border-b border-gray-700/50">Project Files</h3>
+      <ul role="listbox" aria-orientation="vertical" className="space-y-1">
         {fileNodes.map((node) => (
-          <li key={node.path} role="option" aria-selected={selectedFilePath === node.path} className="mb-1">
+          <li key={node.path} role="option" aria-selected={selectedFilePath === node.path}>
             <button
               onClick={() => onSelectFile(node.path)}
-              className={`w-full text-left px-3 py-2 rounded-md flex items-center transition-colors duration-150 ease-in-out
+              className={`w-full text-left px-4 py-2.5 rounded-lg flex items-center transition-all duration-200 ease-in-out
                 ${selectedFilePath === node.path 
-                  ? 'bg-indigo-600 text-white' 
-                  : 'hover:bg-gray-700 text-gray-200'
+                  ? 'bg-gradient-to-r from-indigo-600/50 to-purple-600/50 text-white shadow-md transform translate-y-px' 
+                  : 'hover:bg-gray-700/50 text-gray-300'
                 }`}
             >
               <FileIcon />
-              <span className="truncate text-sm">{node.name}</span>
-              {node.path !== node.name && <span className="text-xs text-gray-400 ml-auto pl-2 truncate hidden sm:inline">{node.path.substring(0, node.path.lastIndexOf('/') + 1)}</span>}
+              <span className="truncate text-sm font-medium">{node.name}</span>
+              {node.path !== node.name && (
+                <span className="text-xs text-gray-500 ml-auto pl-2 truncate hidden sm:inline">
+                  {node.path.substring(0, node.path.lastIndexOf('/') + 1)}
+                </span>
+              )}
             </button>
           </li>
         ))}

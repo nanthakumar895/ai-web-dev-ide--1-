@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import JSZip from 'jszip';
 import { GeneratedFile } from '../types';
-import { InstructionModal } from './InstructionModal'; // New component
+import { InstructionModal } from './InstructionModal';
 
 interface UserInputPaneProps {
   description: string;
@@ -38,21 +37,20 @@ export const UserInputPane: React.FC<UserInputPaneProps> = ({ description, setDe
 
     } catch (error) {
       console.error("Error creating ZIP file:", error);
-      // Optionally, set an error state to display to the user
     } finally {
       setIsDownloading(false);
     }
   };
 
   return (
-    <div className="p-4 bg-gray-800 rounded-lg shadow-lg">
-      <label htmlFor="projectDescription" className="block text-sm font-medium text-indigo-300 mb-1">
+    <div className="p-6 bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/30">
+      <label htmlFor="projectDescription" className="block text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-3">
         Describe your web application:
       </label>
       <textarea
         id="projectDescription"
-        rows={6} // Slightly reduced rows to make space for new buttons
-        className="w-full p-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400 text-sm"
+        rows={6}
+        className="w-full p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-500 text-sm transition-all duration-200 ease-in-out"
         placeholder="e.g., A simple to-do list app with a clean interface, or a blog platform with user authentication..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -62,7 +60,7 @@ export const UserInputPane: React.FC<UserInputPaneProps> = ({ description, setDe
       <button
         onClick={onGenerate}
         disabled={isLoading || isDownloading || !description.trim()}
-        className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-md disabled:bg-gray-500 disabled:cursor-not-allowed transition duration-150 ease-in-out flex items-center justify-center text-sm"
+        className="mt-4 w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out transform hover:translate-y-px flex items-center justify-center text-sm shadow-lg"
         aria-live="polite"
       >
         {isLoading ? (
@@ -74,48 +72,24 @@ export const UserInputPane: React.FC<UserInputPaneProps> = ({ description, setDe
             Generating...
           </>
         ) : (
-          <>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 mr-2">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z" clipRule="evenodd" />
-            </svg>
-            Generate Project
-          </>
+          'Generate Project'
         )}
       </button>
 
-      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           onClick={handleDownloadProject}
           disabled={isLoading || isDownloading || generatedFiles.length === 0}
-          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md disabled:bg-gray-500 disabled:cursor-not-allowed transition duration-150 ease-in-out flex items-center justify-center text-sm"
+          className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out transform hover:translate-y-px flex items-center justify-center text-sm shadow-lg"
           aria-live="polite"
         >
-          {isDownloading ? (
-            <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Downloading...
-            </>
-          ) : (
-            <>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 mr-2">
-                <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.905 3.129V2.75z" />
-                <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-              </svg>
-              Download Project
-            </>
-          )}
+          {isDownloading ? 'Downloading...' : 'Download Project'}
         </button>
         <button
           onClick={() => setShowVSCodeInstructions(true)}
           disabled={isLoading || isDownloading || generatedFiles.length === 0}
-          className="w-full bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-md disabled:bg-gray-500 disabled:cursor-not-allowed transition duration-150 ease-in-out flex items-center justify-center text-sm"
+          className="w-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out transform hover:translate-y-px flex items-center justify-center text-sm shadow-lg"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-            </svg>
           Open in VS Code
         </button>
       </div>

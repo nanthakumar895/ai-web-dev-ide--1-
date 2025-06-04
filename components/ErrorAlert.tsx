@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface ErrorAlertProps {
@@ -8,13 +7,13 @@ interface ErrorAlertProps {
 
 export const ErrorAlert: React.FC<ErrorAlertProps> = ({ message, onClose }) => {
   return (
-    <div className="bg-red-700 border border-red-900 text-red-100 px-4 py-3 rounded-lg relative shadow-md" role="alert">
+    <div className="bg-gradient-to-r from-red-600/90 to-pink-600/90 backdrop-blur-sm border border-red-500/30 text-red-100 px-6 py-4 rounded-xl relative shadow-lg" role="alert">
       <strong className="font-bold mr-1">Error:</strong>
       <span className="block sm:inline">{message}</span>
       {onClose && (
         <button
           onClick={onClose}
-          className="absolute top-0 bottom-0 right-0 px-4 py-3 text-red-200 hover:text-white"
+          className="absolute top-0 bottom-0 right-0 px-4 py-3 text-red-200 hover:text-white transition-colors duration-200"
           aria-label="Close"
         >
           <svg className="fill-current h-6 w-6" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
