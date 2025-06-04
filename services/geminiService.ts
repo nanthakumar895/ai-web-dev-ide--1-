@@ -1,11 +1,10 @@
-
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { ProjectData } from '../types';
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = import.meta.env.GEMINI_API_KEY;
 
 if (!API_KEY) {
-  console.error("API_KEY environment variable not set. AI features will not work.");
+  console.error("GEMINI_API_KEY environment variable not set. AI features will not work.");
   // Potentially throw an error or use a mock response for development if API_KEY is not critical for all parts of the app.
   // For this app, it's critical.
 }
@@ -16,7 +15,7 @@ const MODEL_NAME = "gemini-2.5-flash-preview-04-17";
 
 export async function generateProjectFiles(userDescription: string): Promise<ProjectData | null> {
   if (!API_KEY) {
-    throw new Error("Gemini API Key is not configured. Please set the API_KEY environment variable.");
+    throw new Error("Gemini API Key is not configured. Please set the GEMINI_API_KEY environment variable.");
   }
   
   const prompt = `
@@ -109,7 +108,7 @@ If you generate a backend, ensure its 'package.json' scripts are distinct from f
   } catch (error) {
     console.error("Error calling Gemini API or parsing response:", error);
     if (error instanceof Error && error.message.includes("API key not valid")) {
-        throw new Error("Invalid Gemini API Key. Please check your API_KEY environment variable.");
+        throw new Error("Invalid Gemini API Key. Please check your GEMINI_API_KEY environment variable.");
     }
     throw new Error(`Failed to generate project files using AI. ${error instanceof Error ? error.message : ''}`);
   }
