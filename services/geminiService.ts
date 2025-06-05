@@ -3,8 +3,8 @@ import { ProjectData } from '../types';
 
 const API_KEY = import.meta.env.GEMINI_API_KEY;
 
-if (!API_KEY || API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
-  console.error("GEMINI_API_KEY environment variable not set or using placeholder value. Please set a valid API key in .env.local");
+if (!API_KEY) {
+  console.error("GEMINI_API_KEY environment variable not set. Please set a valid API key in .env.local");
   throw new Error("Gemini API Key is not configured. Please set the GEMINI_API_KEY environment variable in .env.local");
 }
 
@@ -16,7 +16,12 @@ export async function generateProjectFiles(userDescription: string): Promise<Pro
   try {
     const response: GenerateContentResponse = await ai.models.generateContent({
       model: MODEL_NAME,
-      contents: prompt,
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: userDescription }],
+        },
+      ],
       config: {
         responseMimeType: "application/json",
       },
