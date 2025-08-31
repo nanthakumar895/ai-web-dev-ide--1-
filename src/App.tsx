@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { UserInputPane } from './components/UserInputPane';
-import { FileExplorer } from './components/FileExplorer';
-import { CodeViewer } from './components/CodeViewer';
-import { PreviewPane } from './components/PreviewPane';
-import { LoadingSpinner } from './components/LoadingSpinner';
-import { ErrorAlert } from './components/ErrorAlert';
+import { UserInputPane } from '../components/UserInputPane';
+import { FileExplorer } from '../components/FileExplorer';
+import { CodeViewer } from '../components/CodeViewer';
+import { PreviewPane } from '../components/PreviewPane';
+import { LoadingSpinner } from '../components/LoadingSpinner';
+import { ErrorAlert } from '../components/ErrorAlert';
 import { GeneratedFile, ProjectData } from './types';
 import { generateProjectFiles } from './services/geminiService';
 
