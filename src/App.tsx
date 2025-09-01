@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [activeRightPane, setActiveRightPane] = useState<ActiveRightPane>('code');
+  const [activeRightPane, setActiveRightPane] = useState<ActiveRightPane>('preview');
 
   const handleGenerateProject = useCallback(async () => {
     if (!projectDescription.trim()) {
