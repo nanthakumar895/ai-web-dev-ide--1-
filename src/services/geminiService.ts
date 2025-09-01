@@ -1,9 +1,9 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { ProjectData } from '../types';
 
-const API_KEY = import.meta.env.GEMINI_API_KEY;
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-if (!API_KEY || API_KEY === 'YOUR_ACTUAL_GEMINI_API_KEY_HERE') {
+if (!API_KEY) {
   console.error("GEMINI_API_KEY environment variable not set. Please set a valid API key in .env.local");
   throw new Error("Gemini API Key is not configured. Please set the GEMINI_API_KEY environment variable in .env.local");
 }
